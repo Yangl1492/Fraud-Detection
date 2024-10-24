@@ -53,7 +53,9 @@ From the table, it is evident that when the NaN percentage is in the range [0, 0
 
 
 2.3. Filling Nan
+
 2.3.1. Correlation heatmap of Features with entire values
+Since our approach to filling missing values relies on model training using features with available data, we first use a heat map to visualize the correlations among these features. This helps us identify relationships between them and allows us to reduce the dimensionality of the dataset before imputing the missing values. 
 2.3.2. Simply filling
 2.3.3. KNN filling
 2.4. Outlier detections
