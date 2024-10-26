@@ -1,1 +1,72 @@
-Second Project Report Project TitleReal-time Anomaly Detection in Financial TransactionsAuthors and Team°Ò Author 1: Haozhen Guo°Ò Author 2: Yang LiuTeam name: Black Thym1. Executive Summary1.1. Decisions to be impactedBased on our research, anomaly detection algorithms play a crucial role in shaping business decisions across three key areas:°Ò Personal Savings Protection: By identifying abnormal transactions, banks and other financial institutions can proactively monitor and block suspicious or high-risk activities, thereby safeguarding individual savings and account security.°Ò Risk Management: Anomaly detection enables financial institutions to recognize unusual patterns within portfolio management, allowing for timely adjustments to investment strategies, and ultimately enhancing risk management and financial performance.°Ò Anti-Money Laundering (AML): A major application of anomaly detection is in identifying irregular transaction behaviors that may indicate potential money laundering activities, helping institutions comply with regulations and prevent financial crime.1.2. Business Value°Ò Enhanced Security and Customer Trust°Ò Cost Reduction through Automated Monitoring°Ò Scalable Risk Management Solutions°Ò Proactive Fraud Prevention for Industry Growth1.3. Data Assets°Ò Transaction Data°Ò Historical Fraud Data°Ò Customer Behavioral Data°Ò External Economic Data2. Data Preprocessing2.1. Data Description2.2. Correlation with the target column2.3. Drop Nan and dominated features2.4. Filling Nan2.4.1. Correlation heatmap of Features with entire values2.4.2. Simply filling2.4.3. KNN filling2.5. Outlier detections2.5.1. IQR detection2.5.2. Z-score detection2.5.3. DBScan/ Isolation3. Model Updates3.1. Models in Planning3.2. Machine Learning WorkFLow as MLM4. Source Code// when finished the code, paste the github link.5. Next Steps5.1. Plan for Improvement5.2. Timeline of Next Steps
+Second Project Report 
+
+Project Title
+Real-time Anomaly Detection in Financial Transactions
+Authors and Team
+‚óè Author 1: Haozhen Guo
+‚óè Author 2: Yang Liu
+Team name: Black Thym
+1. Executive Summary
+1.1. Decisions to be impacted
+Based on our research, anomaly detection algorithms play a crucial role in shaping business decisions across three key areas:
+‚óè Personal Savings Protection: By identifying abnormal transactions, banks and other financial institutions can proactively monitor and block suspicious or high-risk activities, thereby safeguarding individual savings and account security.
+‚óè Risk Management: Anomaly detection enables financial institutions to recognize unusual patterns within portfolio management, allowing for timely adjustments to investment strategies, and ultimately enhancing risk management and financial performance.
+‚óè Anti-Money Laundering (AML): A major application of anomaly detection is in identifying irregular transaction behaviors that may indicate potential money laundering activities, helping institutions comply with regulations and prevent financial crime.
+
+1.2. Business Value
+‚óè Enhanced Security and Customer Trust
+‚óè Cost Reduction through Automated Monitoring
+‚óè Scalable Risk Management Solutions
+‚óè Proactive Fraud Prevention for Industry Growth
+
+1.3. Data Assets
+Our fraud detection dataset was collected from Kaggle and provided by Vesta Corporation, a leader in e-commerce payment solutions. The dataset is split into two files: "train_identity.csv" and "train_transaction.csv", both of which can be joined using the common, unique key TransactionID. Our goal is to establish machine learning methods to identify fraudulent transactions, which are labeled as "isFraud" in "train_transaction.csv", using a wide range of features.
+
+Detailed Information about Each Dataset:
+1) "train_transaction.csv": This file contains the majority of data related to transactions. Key features include:
+TransactionDT: Timedelta from a given reference datetime (not an actual timestamp).
+TransactionAMT: The transaction payment amount in USD.
+ProductCD: Product code, representing the product for each transaction.
+card1 - card6: Payment card information, such as card type, card category, issuing bank, country, etc.
+addr: Address information.
+dist: Distance-related features.
+P_ and R_emaildomain: Purchaser and recipient email domains.
+C1-C14: Counting features, such as how many addresses are associated with the payment card (the actual meaning is masked).
+D1-D15: Timedeltas, such as days between previous transactions.
+M1-M9: Matching features, such as whether names on the card and address match.
+Vxxx: Vesta-engineered rich features, including ranking, counting, and other entity relations.
+
+2) "train_identity.csv": This file contains identity information variables associated with transactions, such as network connection details (IP, ISP, etc.) and digital signature data (UA/os, etc.). However, the field names are masked, and pairwise dictionaries are not provided due to privacy protection and contractual agreements.
+
+For this project, we will benchmark machine learning models on a large-scale dataset of real-world e-commerce financial transactions. Our goal is to develop a more effective method for detecting fraud in transactions, thereby improving accuracy and efficiency in protecting personal assets.
+
+2. Data Preprocessing
+2.1. Correlation with the target column
+
+Before dropping columns with a high percentage of NaN or dominated values, we first calculate the correlation between each column and the target column (‚ÄúisFraud‚Äù). This helps us identify features that may strongly correlate with the target when a transaction is fraudulent. After performing the calculations, the highest absolute correlation value is 0.396, indicating that no feature has a strong correlation with the target column.
+
+2.2. Drop Nan and dominated features
+
+We use two methods to analyze the distribution of NaN values in our dataset. First, we create a table that records each feature's data type, percentage of null values, and the number of unique values, which helps us evaluate the characteristics of each feature. Next, we calculate the proportion of NaN values to determine an appropriate threshold for handling missing data. The following table shows the proportion of NaN values:
+
+From the table, it is evident that when the NaN percentage is in the range [0, 0.15], we retain half of the features, which is sufficient for model training. Additionally, there are no features with NaN percentages between 0.15 and 0.40. A 15% threshold for NaN values is significantly more manageable compared to 40%, making it a preferable choice for data retention. 
+
+
+2.3. Filling Nan
+
+2.3.1. Correlation heatmap of Features with entire values
+Since our approach to filling missing values relies on model training using features with available data, we first use a heat map to visualize the correlations among these features. This helps us identify relationships between them and allows us to reduce the dimensionality of the dataset before imputing the missing values. 
+2.3.2. Simply filling
+2.3.3. KNN filling
+2.4. Outlier detections
+2.4.1. IQR detection
+2.4.2. Z-score detection
+2.4.3. DBScan/ Isolation
+3. Model Updates
+3.1. Models in Planning
+3.2. Machine Learning WorkFLow as MLM
+4. Source Code
+// when finished the code, paste the github link.
+5. Next Steps
+5.1. Plan for Improvement
+5.2. Timeline of Next Steps
